@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("7Y5G9cN5ormvwdQkxYwqTp4h5ENBXN44hjnuTzN3FhED");
+declare_id!("PeP9DUUhKve9zvWUM1dpRzWNFWpWjdYhUAcpK8bKJx6");
 
 #[program]
 pub mod certichain {
@@ -8,32 +8,30 @@ pub mod certichain {
 
     pub fn issue_certificate(
         ctx: Context<IssueCertificate>,
-        certificate_id: String,
         student_name: String,
-        course_name: String,
+        course: String,
+        college: String,
     ) -> Result<()> {
         let cert = &mut ctx.accounts.certificate;
-        cert.certificate_id = certificate_id;
         cert.student_name = student_name;
-        cert.course_name = course_name;
-        cert.issuer = ctx.accounts.issuer.key();
+        cert.course = course;
+        cert.college = college;
         Ok(())
     }
 }
 
 #[derive(Accounts)]
 pub struct IssueCertificate<'info> {
-    #[account(init, payer = issuer, space = 8 + 256)]
+    #[account(init, payer = user, space = 256)]
     pub certificate: Account<'info, Certificate>,
     #[account(mut)]
-    pub issuer: Signer<'info>,
+    pub user: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
 #[account]
 pub struct Certificate {
-    pub certificate_id: String,
     pub student_name: String,
-    pub course_name: String,
-    pub issuer: Pubkey,
+    pub course: String,
+    pub college: String,
 }
