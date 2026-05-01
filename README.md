@@ -34,7 +34,6 @@ Anyone can verify a certificate using the certificate account public key.
 6. Repeat to issue multiple certificates → each will have a **unique account**
 
 ---
-
 ## Evaluation Criteria Covered
 |--------------------------|------------------------------------------------------------------------------|
 | Criteria                 | How CertiChain Meets It                                                      |
